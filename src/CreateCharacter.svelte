@@ -40,6 +40,7 @@
         display: grid;
         place-items: center;
     }
+
 </style>
 
 {#if (hasError)}
