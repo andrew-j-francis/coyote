@@ -7,3 +7,4 @@ pub struct Entity {
     pub stamina: i32,
     pub strength: i32,
 }
+

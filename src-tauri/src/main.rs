@@ -4,10 +4,11 @@ windows_subsystem = "windows"
 )]
 
 mod entity;
+mod combat;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![create_character])
+        .invoke_handler(tauri::generate_handler![create_character, create_enemy])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -36,5 +37,3 @@ fn create_enemy() -> entity::Entity {
 
     enemy.into()
 }
-
-

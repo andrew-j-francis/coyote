@@ -1,11 +1,19 @@
 <script>
+    import {invoke} from "@tauri-apps/api/tauri";
     import {Button} from "carbon-components-svelte";
 
     export let character;
     let enemy;
+    let showEnemy = false;
 
 
     function createEnemy() {
+        invoke('create_enemy').then((newEnemy) => {
+            console.log(newEnemy);
+
+            enemy = newEnemy;
+            showEnemy = true;
+        })
 
     }
 </script>
@@ -33,20 +41,37 @@
 <div class="entity-data-section">
     <div class="entity-data">
         <div>
-            {character.name}
+            Name: {character.name}
         </div>
         <div>
-            {character.gold}
+            Gold: {character.gold}
         </div>
         <div>
-            {character.strength}
+            Strength: {character.strength}
         </div>
         <div>
-            {character.stamina}
+            Stamina: {character.stamina}
         </div>
     </div>
     <div class="entity-data">
-        <Button on:click={createEnemy}></Button>
+        {#if !showEnemy}
+            <Button on:click={createEnemy}>Spawn Enemy</Button>
+        {/if}
+
+        {#if showEnemy}
+            <div>
+                Name: {enemy.name}
+            </div>
+            <div>
+                Gold: {enemy.gold}
+            </div>
+            <div>
+                Strength: {enemy.strength}
+            </div>
+            <div>
+                Stamina: {enemy.stamina}
+            </div>
+        {/if}
     </div>
 </div>
 
