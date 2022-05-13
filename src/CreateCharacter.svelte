@@ -1,7 +1,10 @@
 <script>
     import {invoke} from "@tauri-apps/api/tauri";
-    import {Button, NumberInput, TextInput} from "carbon-components-svelte";
+    import {Button, Form, FormGroup, NumberInput, TextInput} from "carbon-components-svelte";
     import ErrorDisplay from "./ErrorDisplay.svelte";
+    import {createEventDispatcher} from "svelte";
+
+    const dispatch = createEventDispatcher();
 
     let name = "";
     let strength = 0;
@@ -22,20 +25,17 @@
                 name: name,
                 strength: strength,
                 stamina: stamina
-            }).then((character) => console.log(character))
+            }).then((character) => {
+                dispatch('characterCreate', {
+                    character: character
+                })
+            })
         }
     }
 
 </script>
 
 <style>
-    .create-character-page {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        justify-content: space-around;
-    }
-
     .create-character-button {
         display: grid;
         place-items: center;
@@ -46,14 +46,17 @@
 {#if (hasError)}
     <ErrorDisplay errorMessage={errorMessage}></ErrorDisplay>
 {/if}
-
-<div class="create-character-page">
-    <TextInput labelText="Character Name" bind:value={name}></TextInput>
-    {remainingAttributePoints}
-
-    <NumberInput label="Strength" min="0" max="10" bind:value={strength}></NumberInput>
-    <NumberInput label="Stamina" min="0" max="10" bind:value={stamina}></NumberInput>
-
+<div style="padding: 2rem">
+    <Form>
+        <FormGroup>
+            <TextInput labelText="Character Name" bind:value={name}></TextInput>
+        </FormGroup>
+        <FormGroup legendText="Stats">
+            <NumberInput label="Attribute Points Remaining" value={remainingAttributePoints} readonly></NumberInput>
+            <NumberInput label="Strength" min="0" max="10" bind:value={strength}></NumberInput>
+            <NumberInput label="Stamina" min="0" max="10" bind:value={stamina}></NumberInput>
+        </FormGroup>
+    </Form>
 </div>
 
 <div class="create-character-button">

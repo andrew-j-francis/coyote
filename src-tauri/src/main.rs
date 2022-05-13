@@ -13,8 +13,8 @@ fn main() {
 }
 
 #[tauri::command]
-fn create_character(name: String, stamina: i32, strength: i32) -> entity::Character {
-    let character = entity::Character {
+fn create_character(name: String, stamina: i32, strength: i32) -> entity::Entity {
+    let character = entity::Entity {
         name,
         gold: 0,
         stamina,
@@ -24,3 +24,17 @@ fn create_character(name: String, stamina: i32, strength: i32) -> entity::Charac
 
     character.into()
 }
+
+#[tauri::command]
+fn create_enemy() -> entity::Entity {
+    let enemy = entity::Entity {
+        name: String::from("Spider"),
+        gold: 10,
+        stamina: 3,
+        strength: 5,
+    };
+
+    enemy.into()
+}
+
+
