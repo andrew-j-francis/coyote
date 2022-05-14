@@ -87,15 +87,19 @@
 </div>
 
 <hr>
-<div style="font-size: x-large; padding: 1rem;">
+<div style="font-size: large; padding: 1rem;">
     Combat Log
 </div>
 <hr>
 
 {#each combatLog as step}
     <div>
-        {step.step_number}
-        {step.character_damage}
-        {step.enemy_damage}
+        {step.step_number}. You hit {enemy.name} for {step.character_damage} damage. {enemy.name} hit you
+        for {step.enemy_damage}.
     </div>
+
+    {#if step.enemy_is_dead}
+        <div>Enemy Dead</div>
+    {/if}
 {/each}
+

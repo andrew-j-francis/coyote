@@ -20,6 +20,7 @@ pub fn resolve_combat(character: &Entity, enemy: &Entity) -> Vec<CombatStep> {
                 step_number,
                 character_damage: character_attack_power,
                 enemy_damage: 0,
+                enemy_is_dead: true,
             });
 
             return combat_steps;
@@ -31,6 +32,7 @@ pub fn resolve_combat(character: &Entity, enemy: &Entity) -> Vec<CombatStep> {
             step_number,
             character_damage: character_attack_power,
             enemy_damage: enemy_attack_power,
+            enemy_is_dead: false,
         });
 
         if character_health <= 0 {
@@ -46,4 +48,5 @@ pub struct CombatStep {
     pub step_number: u32,
     pub character_damage: i32,
     pub enemy_damage: i32,
+    pub enemy_is_dead: bool,
 }
