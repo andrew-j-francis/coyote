@@ -5,6 +5,7 @@
     export let character;
     let enemy;
     let showEnemy = false;
+    let combatLog = [];
 
 
     function createEnemy() {
@@ -13,7 +14,17 @@
 
             enemy = newEnemy;
             showEnemy = true;
+
+            invoke('resolve_combat', {
+                character: character,
+                enemy: enemy
+            })
+                .then((combatSteps) => {
+                    console.log(combatSteps);
+                    combatLog = combatSteps;
+                })
         })
+
 
     }
 </script>
@@ -81,3 +92,10 @@
 </div>
 <hr>
 
+{#each combatLog as step}
+    <div>
+        {step.step_number}
+        {step.character_damage}
+        {step.enemy_damage}
+    </div>
+{/each}

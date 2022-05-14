@@ -8,7 +8,7 @@ mod combat;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![create_character, create_enemy])
+        .invoke_handler(tauri::generate_handler![create_character, create_enemy, resolve_combat])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -31,9 +31,14 @@ fn create_enemy() -> entity::Entity {
     let enemy = entity::Entity {
         name: String::from("Spider"),
         gold: 10,
-        stamina: 3,
-        strength: 5,
+        stamina: 8,
+        strength: 2,
     };
 
     enemy.into()
+}
+
+#[tauri::command]
+fn resolve_combat(character: entity::Entity, enemy: entity::Entity) -> Vec<combat::CombatStep> {
+    combat::resolve_combat(&character, &enemy)
 }
